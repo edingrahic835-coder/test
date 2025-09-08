@@ -1,0 +1,22 @@
+{
+  "itemGroup.medical_tab": "Medical Devices",
+  "item.medicalmod.ultrasound": "Ultrasound Device",
+  "item.medicalmod.ekg": "12-Lead EKG",
+  "item.medicalmod.heart_monitor": "Heart Monitor",
+  "item.medicalmod.defibrillator": "Defibrillator",
+  "item.medicalmod.ultrasound_gel": "Ultrasound Gel",
+  "item.medicalmod.oxygen_mask": "Oxygen Mask",
+  "item.medicalmod.stethoscope_pink_silver": "Stethoscope (Pink, Silver)",
+  "msg.medicalmod.ultrasound.clear": "Ultrasound image is clear (gel applied).",
+  "msg.medicalmod.ultrasound.nogel": "No gel detected (hold Gel in offhand).",
+  "msg.medicalmod.gel.apply": "Applied gel.",
+  "msg.medicalmod.stethoscope.listen": "You listen carefully...",
+  "msg.medicalmod.stethoscope.self": "You place the stethoscope on yourself...",
+  "msg.medicalmod.heartmonitor.place": "Place the heart monitor next to the bed.",
+  "msg.medicalmod.heartmonitor.attached": "Heart monitor attached to entity.",
+  "msg.medicalmod.heartmonitor.detached": "Heart monitor detached from entity.",
+  "msg.medicalmod.oxymask.applied": "Oxygen mask applied.",
+  "msg.medicalmod.cpr.start": "CPR started on patient.",
+  "msg.medicalmod.defib.success": "Defibrillation successful!",
+  "msg.medicalmod.defib.fail": "Defibrillation failed."
+}
