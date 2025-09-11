@@ -9,7 +9,7 @@ archivesBaseName = 'MedicalDevicesMod'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17) // Forge 1.20.1 braucht Java 17
+        languageVersion = of(17) // Forge 1.20.1 braucht Java 17
     }
 }
 
@@ -34,6 +34,6 @@ pluginManagement {
 }
 rootProject.name = "MedicalDevicesMod"
 java -version
-gradlew.bat build # Windows
+gradlew.bat build 
 
 
