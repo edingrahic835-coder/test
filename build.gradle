@@ -1,35 +1,28 @@
-
 plugins {
-    id 'eclipse'
-    id 'maven-publish'
+    id 'java'
     id 'net.minecraftforge.gradle' version '6.0.+'
 }
 
-version = '1.0.1'
-group = 'com.medicalmod'
-archivesBaseName = 'medicalmod'
+group = 'com.deinname.medmod'
+version = '1.0.0'
+archivesBaseName = 'MedicalDevicesMod'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(17) // Forge 1.20.1 braucht Java 17
     }
 }
 
 minecraft {
     mappings channel: 'official', version: '1.20.1'
-    runs {
-        client {
-            workingDirectory project.file('run')
-            args '--username', 'Player'
-            mods { medicalmod { source sourceSets.main } }
-        }
-        server {
-            workingDirectory project.file('run')
-            mods { medicalmod { source sourceSets.main } }
-        }
-    }
 }
 
-repositories { mavenCentral() }
-dependencies { minecraft 'net.minecraftforge:forge:1.20.1-47.2.0' }
-tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+repositories {
+    mavenCentral()
+    maven { url = 'https://maven.minecraftforge.net/' }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-47.1.0'
+}
+
