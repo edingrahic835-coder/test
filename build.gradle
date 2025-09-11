@@ -25,4 +25,15 @@ repositories {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.20.1-47.1.0'
 }
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven { url = 'https://maven.minecraftforge.net/' }
+        mavenCentral()
+    }
+}
+rootProject.name = "MedicalDevicesMod"
+java -version
+gradlew.bat build # Windows
+
 
