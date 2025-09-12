@@ -20,14 +20,19 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Verify Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
+
       - name: Grant execute permission for Gradlew
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew build --stacktrace --info
+        run: ./gradlew build --no-daemon --stacktrace --info
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: mod-jar
           path: build/libs/*.jar
+
+
