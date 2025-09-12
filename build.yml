@@ -1,27 +1,33 @@
-
-name: Build Forge Mod (1.20.1)
+name: Build Mod
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v3
-      - name: Build
-        run: gradle build --no-daemon
-      - name: Upload artifact
+
+      - name: Grant execute permission for Gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build --stacktrace --info
+
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: medicalmod-jar
+          name: mod-jar
           path: build/libs/*.jar
