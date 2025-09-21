@@ -1,41 +1,36 @@
-name: Build Mod Debug
+name: Build Mod
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Show repository files
-        run: ls -R
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: 17
 
-      - name: Show gradlew permissions
-        run: ls -l gradlew || echo "gradlew not found"
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 17
+    - name: Build with Gradle
+      run: ./gradlew build
 
-      - name: Grant execute permission for Gradlew
-        run: chmod +x gradlew
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: mod-build
+        path: build/libs/*.jar
 
-      - name: Run Gradle build
-        run: ./gradlew build --no-daemon --stacktrace --info
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: mod-jar
-          path: build/libs/*.jar
 
 
