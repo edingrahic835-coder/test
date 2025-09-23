@@ -1,35 +1,112 @@
-#!/bin/sh
-./gradle/wrapper/gradle-wrapper.jar "$@"
-name: Build Mod
+#!/usr/bin/env sh
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+##############################################################################
+##
+##  Gradle start up script for UN*X
+##
+##############################################################################
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# Add default JVM options here. You can also use JAVA_OPTS to pass JVM args
+DEFAULT_JVM_OPTS=""
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+APP_NAME="Gradle"
+APP_BASE_NAME=$(basename "$0")
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 17
+# Use the maximum available, or set MAX_FD != -1 to use that value.
+MAX_FD="maximum"
 
-      - name: Make Gradlew executable
-        run: chmod +x ./gradlew
+warn () {
+    echo "$*"
+}
 
-      - name: Build with Gradle
-        run: ./gradlew build
+die () {
+    echo
+    echo "$*"
+    echo
+    exit 1
+}
 
-      - name: Upload Build Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Mod-Build
-          path: build/libs/*.jar
+# OS specific support (must be 'true' or 'false').
+cygwin=false
+msys=false
+darwin=false
+nonstop=false
+case "$(uname)" in
+  CYGWIN* )
+    cygwin=true
+    ;;
+  Darwin* )
+    darwin=true
+    ;;
+  MINGW* )
+    msys=true
+    ;;
+  NONSTOP* )
+    nonstop=true
+    ;;
+esac
+
+# Attempt to set APP_HOME
+PRG="$0"
+while [ -h "$PRG" ] ; do
+    ls=$(ls -ld "$PRG")
+    link=$(expr "$ls" : '.*-> \(.*\)$')
+    if expr "$link" : '/.*' > /dev/null; then
+        PRG="$link"
+    else
+        PRG=$(dirname "$PRG")/"$link"
+    fi
+done
+SAVED="$(pwd)"
+cd "$(dirname \"$PRG\")/" >/dev/null
+APP_HOME="$(pwd -P)"
+cd "$SAVED" >/dev/null
+
+CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
+
+# Determine the Java command to use to start the JVM.
+if [ -n "$JAVA_HOME" ] ; then
+    if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
+        JAVACMD="$JAVA_HOME/jre/sh/java"
+    else
+        JAVACMD="$JAVA_HOME/bin/java"
+    fi
+    if [ ! -x "$JAVACMD" ] ; then
+        die "ERROR: JAVA_HOME is set to an invalid directory: $JAVA_HOME"
+    fi
+else
+    JAVACMD="java"
+    which java >/dev/null 2>&1 || die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH."
+fi
+
+# Increase the maximum file descriptors if we can.
+if [ "$cygwin" = "false" -a "$darwin" = "false" -a "$nonstop" = "false" ] ; then
+    MAX_FD_LIMIT=$(ulimit -H -n)
+    if [ $? -eq 0 ] ; then
+        if [ "$MAX_FD" = "maximum" -o "$MAX_FD" = "max" ] ; then
+            MAX_FD="$MAX_FD_LIMIT"
+        fi
+        ulimit -n $MAX_FD
+        if [ $? -ne 0 ] ; then
+            warn "Could not set maximum file descriptor limit: $MAX_FD"
+        fi
+    fi
+fi
+
+# For Darwin, add options to specify how the application appears in the dock
+if $darwin; then
+    GRADLE_OPTS="$GRADLE_OPTS \"-Xdock:name=$APP_NAME\" \"-Xdock:icon=$APP_HOME/media/gradle.icns\""
+fi
+
+# Convert the existing environment variables to arrays
+save () {
+    for i do printf %s\\n "$i" | sed "s/'/'\\\\''/g;1s/^/'/;\$s/\$/' \\\\/" ; done
+    echo " "
+}
+APP_ARGS=$(save "$@")
+
+# Collect all arguments for the java command, following the shell quoting and substitution rules
+eval set -- $DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS \
+    -classpath "$CLASSPATH" org.gradle.wrapper.GradleWrapperMain "$APP_ARGS"
+
+exec "$JAVACMD" "$@"
