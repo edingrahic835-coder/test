@@ -3,8 +3,6 @@ name: Build Mod
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   build:
@@ -20,9 +18,6 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Make Gradlew executable
-        run: chmod +x ./gradlew
-
       - name: Build with Gradle
         run: ./gradlew build
 
@@ -31,6 +26,7 @@ jobs:
         with:
           name: Mod-Build
           path: build/libs/*.jar
+
 
          
 
